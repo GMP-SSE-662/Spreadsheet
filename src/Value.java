@@ -1,28 +1,27 @@
+import javafx.fxml.Initializable;
+
 public class Value {
 
-    public static final String STRING_TAG = "STRING";
-    public static final String DOUBLE_TAG = "DBL";
-    public static final String INVALID_TAG = "INVALID";
+  public static final String STRING_TAG = "STRING";
+  public static final String DOUBLE_TAG = "DBL";
+  public static final String INVALID_TAG = "INVALID";
 
   private double _dVal;
   private String _sVal;
-  private String _tag;
+  private Tag _tag;
 
   public Value() {
     setDVal(0.0);
     setSVal(null);
-    setTag(STRING_TAG);
   }
 
   //Constructor
   public Value(String valueInput){
     if(valueIsString(valueInput)){
       setSVal(getValueAfterStringDelimiter(valueInput));
-      setTag(STRING_TAG);
     }
     else{
       setDVal(Double.parseDouble(valueInput));
-      setTag(DOUBLE_TAG);
     }
   }
 
@@ -40,15 +39,11 @@ public class Value {
   //Method to add two Values together
   public Value plus(Value v){
     Value newValue = new Value();
-    //Check to ensure both Values have _tag == DBL
-    if(this.getTag().equals(DOUBLE_TAG) && v.getTag().equals(DOUBLE_TAG)){
+    if(bothValuesAreTaggedDouble(this, v)){
       newValue.setDVal(add(this.getDVal(), v.getDVal()));
-      newValue.setTag(DOUBLE_TAG);
     }
-    //If both Values don't have DBL _tags, don't do the addition
-    //and set the new Value's _tag to INVALID
     else
-      newValue.setTag(INVALID_TAG);
+      newValue.setInvalid();
     return newValue;
   }
 
@@ -60,12 +55,11 @@ public class Value {
   //Method to subtract one Value from another. Same logic as plus()
   public Value minus(Value v){
     Value newValue = new Value();
-    if(this.getTag().equals(DOUBLE_TAG) && v.getTag().equals(DOUBLE_TAG)){
+    if(bothValuesAreTaggedDouble(this, v)){
       newValue.setDVal(subtractFirstBySecond(this.getDVal(), v.getDVal()));
-      newValue.setTag(DOUBLE_TAG);
     }
     else
-      newValue.setTag(INVALID_TAG);
+      newValue.setInvalid();
     return newValue;
   }
 
@@ -77,12 +71,11 @@ public class Value {
   //Method to multiply two Values together. Same logic as plus()
   public Value multipliedBy(Value v){
     Value newValue = new Value();
-    if(this.getTag().equals(DOUBLE_TAG) && v.getTag().equals(DOUBLE_TAG)){
+    if(bothValuesAreTaggedDouble(this, v)){
       newValue.setDVal(multiply(this.getDVal(), v.getDVal()));
-      newValue.setTag(DOUBLE_TAG);
     }
     else
-      newValue.setTag(INVALID_TAG);
+      newValue.setInvalid();
     return newValue;
   }
 
@@ -95,12 +88,11 @@ public class Value {
   public Value dividedBy(Value v){
     Value newValue = new Value();
     //Check both _tags are DBL and divisor is not zero
-    if(this.getTag().equals(DOUBLE_TAG) && v.getTag().equals(DOUBLE_TAG) && !isDivideByZero(v.getDVal())){
+    if(bothValuesAreTaggedDouble(this, v) && !isDivideByZero(v.getDVal())){
       newValue.setDVal(divideFirstBySecond(this.getDVal(), v.getDVal()));
-      newValue.setTag(DOUBLE_TAG);
     }
     else
-      newValue.setTag(INVALID_TAG);
+      newValue.setInvalid();
     return newValue;
   }
 
@@ -115,6 +107,16 @@ public class Value {
   Double divideFirstBySecond(Double firstNum, Double secondNum)
   {
       return firstNum / secondNum;
+  }
+
+  boolean bothValuesAreTaggedDouble(Value valOne, Value valTwo)
+  {
+      return valOne.getTag().equals(DOUBLE_TAG) && valTwo.getTag().equals(DOUBLE_TAG);
+  }
+
+  void setInvalid()
+  {
+      setTag(INVALID_TAG);
   }
 
   // toString that checks _tag, then truncates strings to 10 characters,
@@ -132,26 +134,28 @@ public class Value {
     return _sVal;
   }
 
-  void setSVal(String sVal)
+  private void setSVal(String sVal)
   {
       _sVal = sVal;
+      setTag(STRING_TAG);
   }
 
   public Double getDVal(){
     return _dVal;
   }
 
-  void setDVal(Double dVal)
+  private void setDVal(Double dVal)
   {
       _dVal = dVal;
+      setTag(DOUBLE_TAG);
   }
 
   public String getTag(){
-    return _tag;
+    return _tag.getTagName();
   }
 
-  void setTag(String tag)
+  public void setTag(String tagName)
   {
-      _tag = tag;
+      _tag = Tag.createTag(tagName);
   }
 }

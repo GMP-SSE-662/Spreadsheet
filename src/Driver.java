@@ -6,7 +6,8 @@ public class Driver {
   //Constructs an empty 10x6 grid, and runs in a loop displaying
   //the menu of choices to the user, accepts arguments from the user,
   //and runs the correct methods.
-  public static void main(String[] args){ 
+  public static void main(String[] args){
+    Tag.loadTags();
     Scanner scanner = new Scanner(System.in);
     Grid g = new Grid();
     int row,col,fromRow,fromCol,toRow,toCol,firstRow,

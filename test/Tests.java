@@ -2,11 +2,15 @@ import junit.framework.TestCase;
 
 /**
  * A JUnit test case class.
- * Every method multipliedByting with the word "test" will be called when running
+ * Every method starting with the word "test" will be called when running
  * the test with JUnit.
  */
 public class Tests extends TestCase {
-  
+
+  protected void setUp()
+  {
+    Tag.loadTags();
+  }
 
   public void test1() {
     Value v = new Value();
