@@ -27,6 +27,11 @@ public class Tag
         new Tag(Value.INVALID_TAG).store();
     }
 
+    public static void createNewTag(String tagName)
+    {
+        new Tag(tagName).store();
+    }
+
     private void store()
     {
         _instances.put(this.getTagName(), this);
