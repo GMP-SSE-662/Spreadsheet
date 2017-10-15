@@ -1,4 +1,3 @@
-import javafx.fxml.Initializable;
 
 public class Value {
 
@@ -10,12 +9,18 @@ public class Value {
   private String _sVal;
   private Tag _tag;
 
+  /**
+   * Constructs default value tagged string.
+   */
   public Value() {
     setDVal(0.0);
     setSVal(null);
   }
 
-  //Constructor
+  /**
+   * Creates value of given input.
+   * @param valueInput the type of value.
+   */
   public Value(String valueInput){
     if(valueIsString(valueInput)){
       setSVal(getValueAfterStringDelimiter(valueInput));
@@ -30,15 +35,18 @@ public class Value {
       return value.substring(1);
   }
 
-  //Checks if the first character of input is a quote,
-  //returns true or false. Helper method for Value constructor.
   public boolean valueIsString(String s){
     return s.substring(0,1).equals("\"");
   }
 
-  //Method to add two Values together
+  /**
+   * Adds the given value to this.
+   * @param v the value to be added.
+   * @return the result of the addition.
+   */
   public Value plus(Value v){
     Value newValue = new Value();
+
     if(bothValuesAreTaggedDouble(this, v)){
       newValue.setDVal(add(this.getDVal(), v.getDVal()));
     }
@@ -52,9 +60,14 @@ public class Value {
       return firstNum + secondNum;
   }
 
-  //Method to subtract one Value from another. Same logic as plus()
+  /**
+   * Subtracts the given value from this.
+   * @param v the value to be subtracted.
+   * @return the result of the subtraction.
+   */
   public Value minus(Value v){
     Value newValue = new Value();
+
     if(bothValuesAreTaggedDouble(this, v)){
       newValue.setDVal(subtractFirstBySecond(this.getDVal(), v.getDVal()));
     }
@@ -68,9 +81,14 @@ public class Value {
       return firstNum - secondNum;
   }
 
-  //Method to multiply two Values together. Same logic as plus()
+  /**
+   * Multiplies the given value by this.
+   * @param v the value to be multiplied.
+   * @return the result of the multiplication.
+   */
   public Value multipliedBy(Value v){
     Value newValue = new Value();
+
     if(bothValuesAreTaggedDouble(this, v)){
       newValue.setDVal(multiply(this.getDVal(), v.getDVal()));
     }
@@ -84,10 +102,14 @@ public class Value {
       return firstNum * secondNum;
   }
 
-  //Method to divide one Value from another.
+  /**
+   * Divides this by the given value.
+   * @param v the value to divide by.
+   * @return the result of the division.
+   */
   public Value dividedBy(Value v){
     Value newValue = new Value();
-    //Check both _tags are DBL and divisor is not zero
+
     if(bothValuesAreTaggedDouble(this, v) && !isDivideByZero(v.getDVal())){
       newValue.setDVal(divideFirstBySecond(this.getDVal(), v.getDVal()));
     }
@@ -119,8 +141,11 @@ public class Value {
       setTag(INVALID_TAG);
   }
 
-  // toString that checks _tag, then truncates strings to 10 characters,
-  // and doubles to 10 digits with 4 decimal places.
+  /**
+   * Overrides the toString method.
+   * @return appropriate string representation of this value.
+   */
+  @Override
   public String toString(){
     if(this.getTag().equals(STRING_TAG))
       return String.format("%10s", this.getSVal());
