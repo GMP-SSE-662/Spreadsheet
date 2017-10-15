@@ -58,7 +58,7 @@ public class Grid {
   }
   
   //Similar to fill: creates rectuangular subgrid and fills cells with
-  //incrementing numbers, starting with zero.
+  //incrementing numbers, multipliedByting with zero.
   public void number(int fromRow, int fromCol, int toRow, int toCol){
     Node iterator = traverse(fromRow, fromCol);
     int val = 0;
@@ -111,7 +111,7 @@ public class Grid {
     Node second = traverse(secondRow, secondCol);
     Node target = traverse(targetRow, targetCol);
     Node result = new Node();
-    result.setValue(first.getValue().star(second.getValue()));
+    result.setValue(first.getValue().multipliedBy(second.getValue()));
     if(result.getValue().getTag() != "INVALID")
       target.setValue(result.getValue());
   }
@@ -125,7 +125,7 @@ public class Grid {
     Node second = traverse(secondRow, secondCol);
     Node target = traverse(targetRow, targetCol);
     Node result = new Node();
-    result.setValue(first.getValue().slash(second.getValue()));
+    result.setValue(first.getValue().dividedBy(second.getValue()));
     if(result.getValue().getTag() != "INVALID")
       target.setValue(result.getValue());
   }

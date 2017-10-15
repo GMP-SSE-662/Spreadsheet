@@ -2,7 +2,7 @@ import junit.framework.TestCase;
 
 /**
  * A JUnit test case class.
- * Every method starting with the word "test" will be called when running
+ * Every method multipliedByting with the word "test" will be called when running
  * the test with JUnit.
  */
 public class Tests extends TestCase {
@@ -30,13 +30,13 @@ public class Tests extends TestCase {
   public void testIsQuoteTrue(){
     Value v = new Value();
     String s = "\"sam";
-    assertEquals(true, v.isQuote(s));
+    assertEquals(true, v.valueIsString(s));
   }
   
   public void testIsQuoteFalse(){
     Value v = new Value();
     String s = "sam";
-    assertEquals(false, v.isQuote(s));
+    assertEquals(false, v.valueIsString(s));
   }
   
   public void testPlus1(){
@@ -54,20 +54,20 @@ public class Tests extends TestCase {
     assertEquals(v1.plus(v2).getTag(), "INVALID");
   }
     
-  public void testSlash1(){
+  public void testdividedBy1(){
     Value v1 = new Value("1");
     Value v2 = new Value("2");
-    assertEquals(v1.slash(v2).getDVal(), 0.5);
-    assertEquals(v1.slash(v2).getSVal(), "");
-    assertEquals(v1.slash(v2).getTag(), "DBL");
+    assertEquals(v1.dividedBy(v2).getDVal(), 0.5);
+    assertEquals(v1.dividedBy(v2).getSVal(), "");
+    assertEquals(v1.dividedBy(v2).getTag(), "DBL");
   }
   
-  public void testSlash2(){
+  public void testdividedBy2(){
     Value v1 = new Value("1");
     Value v2 = new Value("0");
-    assertEquals(v1.slash(v2).getDVal(), 0.0);
-    assertEquals(v1.slash(v2).getSVal(), "");
-    assertEquals(v1.slash(v2).getTag(), "INVALID");
+    assertEquals(v1.dividedBy(v2).getDVal(), 0.0);
+    assertEquals(v1.dividedBy(v2).getSVal(), "");
+    assertEquals(v1.dividedBy(v2).getTag(), "INVALID");
   }
     
   public void testToStringSTR(){
@@ -96,9 +96,21 @@ public class Tests extends TestCase {
     assertEquals(g.getHead().getDown().getRight().getValue().getDVal(), 24.0);
   }
 
-      
-    
-  
+  public void testMultipliedBy1()
+  {
+    Value v1 = new Value("5");
+    Value v2 = new Value("2");
+    assertEquals(v1.multipliedBy(v2).getDVal(), 10.0);
+    assertEquals(v1.multipliedBy(v2).getSVal(), "");
+    assertEquals(v1.multipliedBy(v2).getTag(), "DBL");
+  }
 
+  public void testMultipliedBy2()
+  {
+    Value v1 = new Value("1");
+    Value v2 = new Value("\"2");
+    assertEquals(v1.multipliedBy(v2).getDVal(), 0.0);
+    assertEquals(v1.multipliedBy(v2).getTag(), "INVALID");
+  }
   
 }
