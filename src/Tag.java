@@ -15,7 +15,20 @@ public class Tag
      */
     public static Tag createTag(String tagName)
     {
+        if (_instances.get(tagName).equals(null))
+        {
+            createNewTag(tagName);
+        }
         return (Tag) _instances.get(tagName);
+    }
+
+    /**
+     * Creates and stores new tag.
+     * @param tagName of new tag.
+     */
+    public static void createNewTag(String tagName)
+    {
+        new Tag(tagName).store();
     }
 
     private final String _tagName;
@@ -29,6 +42,10 @@ public class Tag
         _tagName = tagName;
     }
 
+    /**
+     * Gets the tag name of this object.
+     * @return the tag name.
+     */
     public String getTagName()
     {
         return _tagName;
@@ -42,15 +59,6 @@ public class Tag
         new Tag(Value.STRING_TAG).store();
         new Tag(Value.DOUBLE_TAG).store();
         new Tag(Value.INVALID_TAG).store();
-    }
-
-    /**
-     * Creates and stores new tag.
-     * @param tagName of new tag.
-     */
-    public static void createNewTag(String tagName)
-    {
-        new Tag(tagName).store();
     }
 
     /**
